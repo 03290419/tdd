@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo from './logo.svg';
 import './App.css';
-import { PageHeader } from 'components';
+import { PageHeader, List } from 'components';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -16,6 +15,7 @@ function App() {
   return (
     <Container>
       <PageHeader />
+      <List />
     </Container>
   );
 }
