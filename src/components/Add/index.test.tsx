@@ -1,7 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import 'jest-styled-components';
-
 import { Add } from './index';
 
 /**
@@ -21,5 +20,13 @@ describe('<Add />', () => {
     render(<Add />);
     const button = screen.getByText('추가');
     expect(button).toBeInTheDocument();
+  });
+  it('3. 할 일을 입력하고, 추가 버튼을 누르면 할 일을 localStorage에 저장하고 할 일 목록 페이지로 이동한다.', () => {
+    render(<Add />);
+    const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
+    const button = screen.getByText('추가');
+    fireEvent.change(input, { target: { value: 'New ToDo' } });
+    fireEvent.click(button);
+    expect(localStorage.getItem('ToDoList')).toBe('["New ToDo"]');
   });
 });
