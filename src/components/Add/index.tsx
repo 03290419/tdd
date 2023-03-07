@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from 'components/Button';
 
 const Container = styled.div``;
 const Input = styled.input``;
 export const Add = () => {
+  const navigate = useNavigate();
   const [toDo, setToDo] = useState('');
   const addTodo = (): void => {
-    localStorage.setItem('ToDoList', JSON.stringify([toDo]));
+    const list = JSON.parse(localStorage.getItem('ToDoList') || '[]');
+    localStorage.setItem('ToDoList', JSON.stringify([...list, toDo]));
+    navigate('/');
   };
 
   return (
