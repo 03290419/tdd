@@ -3,12 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from 'components/Button';
 
-const Container = styled.div``;
-const Input = styled.input``;
+const Container = styled.div`
+  display: flex;
+`;
+const Input = styled.input`
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #bdbdbd;
+  outline: none;
+`;
 export const Add = () => {
   const navigate = useNavigate();
   const [toDo, setToDo] = useState('');
   const addTodo = (): void => {
+    if (toDo === '') return;
     const list = JSON.parse(localStorage.getItem('ToDoList') || '[]');
     localStorage.setItem('ToDoList', JSON.stringify([...list, toDo]));
     navigate('/');

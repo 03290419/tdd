@@ -61,14 +61,17 @@ describe('<Add />', () => {
         <Add />
       </MemoryRouter>,
     );
+    const url = screen.getByText('/add');
+    expect(url).toBeInTheDocument();
     const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
     const button = screen.getByText('추가');
     fireEvent.change(input, { target: { value: 'New ToDo' } });
     fireEvent.click(button);
     expect(localStorage.getItem('ToDoList')).toBe('["Old ToDo","New ToDo"]');
+    expect(url.textContent).toBe('/');
   });
   it('4. 아무 할 일이 없는 경우에는 할 일 추가 버튼을 클릭하여도 빈 할 일이 저장되지 않으며 할 일 목록 페이지로 이동하지 않는다.', () => {
-    localStorage.setItem('ToDolist', '["Old ToDo"]');
+    localStorage.setItem('ToDoList', '["Old ToDo"]');
     const router = '/add';
 
     const TestComponent = (): JSX.Element => {
@@ -84,10 +87,11 @@ describe('<Add />', () => {
     );
     const url = screen.getByText('/add');
     expect(url).toBeInTheDocument();
-    const input = screen.getByPlaceholderText('할 일을 입력해 주세요');
+
     const button = screen.getByText('추가');
-    fireEvent.change(input, { target: { value: 'New ToDo' } });
     fireEvent.click(button);
-    expect(url.textContent).toBe('/');
+
+    expect(localStorage.getItem('ToDoList')).toBe('["Old ToDo"]');
+    expect(url.textContent).toBe('/add');
   });
 });
